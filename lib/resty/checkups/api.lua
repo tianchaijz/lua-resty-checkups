@@ -119,12 +119,16 @@ function _M.prepare_checker(config)
         or base.upstream.checkup_timer_interval
     base.upstream.default_heartbeat_enable = config.global.default_heartbeat_enable
 
+    local subsys = ngx.config.subsystem
+
     for skey, ups in pairs(config) do
         if type(ups) == "table" and type(ups.cluster) == "table" then
-            base.upstream.checkups[skey] = base.table_dup(ups)
+            if not ups.subsys or ups.subsys == subsys then
+                base.upstream.checkups[skey] = base.table_dup(ups)
 
-            for level, cls in pairs(base.upstream.checkups[skey].cluster) do
-                base.extract_servers_from_upstream(skey, cls)
+                for level, cls in pairs(base.upstream.checkups[skey].cluster) do
+                    base.extract_servers_from_upstream(skey, cls)
+                end
             end
         end
     end
