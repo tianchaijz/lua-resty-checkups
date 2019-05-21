@@ -29,8 +29,9 @@ local function prepare_callbacks(skey, opts)
     -- calculate count of cluster and server
     local cls_keys = {}  -- string key or number level
     local srvs_cnt = 0
-    if is_tab(opts.cluster_key) then  -- specify try cluster
-        for _, cls_key in ipairs(opts.cluster_key) do
+    local cluster_key = opts.cluster_key or ups.cluster_key
+    if is_tab(cluster_key) then  -- specify try cluster
+        for _, cls_key in ipairs(cluster_key) do
             local cls = ups.cluster[cls_key]
             if is_tab(cls) then
                 tab_insert(cls_keys, cls_key)
