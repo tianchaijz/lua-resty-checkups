@@ -145,6 +145,15 @@ local heartbeat = {
             return redis_err, err
         end
 
+        local password = ups.password
+        if password and #password > 0 then
+            ok, err = red:auth(password)
+            if not ok then
+                log(ERR, "failed to auth redis: ", id, ", ", err)
+                return redis_err, err
+            end
+        end
+
         local res, err = red:ping()
         if not res then
             log(ERR, "failed to ping redis: ", id, ", ", err)
