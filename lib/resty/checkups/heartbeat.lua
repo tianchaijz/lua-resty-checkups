@@ -255,7 +255,7 @@ local heartbeat = {
             port = port,
             database = ups.name,
             user = ups.user,
-            password = ups.pass,
+            password = ups.password,
             charset = ups.charset,
             max_packet_size = 1024*1024
         }
